@@ -3,9 +3,17 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+// Pages where the bottom nav should NOT appear (public pages)
+const PUBLIC_PAGES = ["/", "/auth", "/plans", "/contact"];
+
 export function MobileNav() {
   const location = useLocation();
   const { t } = useLanguage();
+
+  // Hide nav on public pages
+  if (PUBLIC_PAGES.some((p) => location.pathname === p || location.pathname.startsWith(p))) {
+    return null;
+  }
 
   const items = [
     { icon: Crosshair, labelKey: "nav.analysis", path: "/dashboard" },

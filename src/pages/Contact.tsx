@@ -51,7 +51,7 @@ export default function Contact() {
   const { t } = useLanguage();
 
   return (
-    <AppLayout>
+    <AppLayout showNav={false}>
       <div className="px-4 py-6">
         <div className="flex items-center justify-between mb-8">
           <div className="text-center flex-1">
