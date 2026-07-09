@@ -93,7 +93,7 @@ export default function Contact() {
             </div>
             <div>
               <p className="text-sm font-medium">{t("contact.emailUs")}</p>
-              <p className="text-xs text-muted-foreground">support@example.com</p>
+              <p className="text-xs text-muted-foreground">support@algoscope.app</p>
             </div>
           </CardContent>
         </Card>
@@ -101,7 +101,7 @@ export default function Contact() {
         {/* Footer */}
         <div className="mt-12 text-center">
           <p className="text-xs text-muted-foreground">
-            © 2024 AI Forex Analyst. All rights reserved.
+            © 2026 AlgoScope. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground/60 mt-1">
             Trading involves risk. Past performance is not indicative of future results.
