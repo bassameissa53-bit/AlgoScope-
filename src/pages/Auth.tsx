@@ -215,15 +215,20 @@ export default function Auth() {
             : error.message;
           toast({ title: "Signup Failed", description: msg, variant: "destructive" });
         } else if (data.user) {
-          await supabase.from("profiles").insert({
-            user_id: data.user.id,
-            full_name: formData.fullName,
-          });
-          await supabase.from("subscriptions").insert({
-            user_id: data.user.id,
-            plan: "free",
-            status: "active",
-          });
+          // Insert profile and subscription, but don't fail signup if DB insert fails
+          try {
+            await supabase.from("profiles").insert({
+              user_id: data.user.id,
+              full_name: formData.fullName,
+            });
+            await supabase.from("subscriptions").insert({
+              user_id: data.user.id,
+              plan: "free",
+              status: "active",
+            });
+          } catch (dbErr) {
+            console.warn("Profile/subscription insert failed (will create on first login):", dbErr);
+          }
           toast({ title: "Account Created", description: "Check your email to verify your account." });
           setIsLogin(true);
         }
