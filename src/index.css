@@ -1,0 +1,296 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   AlgoScope — Design System v2
+   Near-black canvas, metallic gold, silver, electric blue.
+   Glassmorphism + ambient grid + gold glow.
+   ========================================================= */
+
+@layer base {
+  :root {
+    /* Canvas */
+    --background: 240 7% 3%;          /* #070708 */
+    --foreground: 240 13% 92%;        /* near-silver */
+
+    /* Surfaces */
+    --card: 240 8% 6%;
+    --card-foreground: 240 13% 92%;
+    --popover: 240 8% 6%;
+    --popover-foreground: 240 13% 92%;
+
+    /* Primary = Metallic Gold #D4AF37 */
+    --primary: 46 65% 52%;
+    --primary-foreground: 240 10% 4%;
+    --primary-glow: 46 80% 62%;
+
+    /* Secondary = Silver #C8C8D0 */
+    --secondary: 240 7% 80%;
+    --secondary-foreground: 240 10% 4%;
+
+    /* AI/Tech accent = Electric Blue #3B8EEA */
+    --accent: 211 80% 57%;
+    --accent-foreground: 240 10% 4%;
+
+    /* Muted */
+    --muted: 240 6% 12%;
+    --muted-foreground: 240 5% 62%;
+
+    /* Status */
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 98%;
+    --success: 152 60% 48%;
+    --success-foreground: 240 10% 4%;
+    --danger: 0 72% 55%;
+    --danger-foreground: 0 0% 98%;
+
+    /* Borders / inputs */
+    --border: 46 30% 18%;
+    --input: 240 6% 12%;
+    --ring: 46 65% 52%;
+
+    --radius: 1rem;
+
+    /* Sidebar (unused, kept for shadcn) */
+    --sidebar-background: 240 8% 5%;
+    --sidebar-foreground: 240 13% 92%;
+    --sidebar-primary: 46 65% 52%;
+    --sidebar-primary-foreground: 240 10% 4%;
+    --sidebar-accent: 240 6% 10%;
+    --sidebar-accent-foreground: 240 13% 92%;
+    --sidebar-border: 240 6% 12%;
+    --sidebar-ring: 46 65% 52%;
+
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(46 70% 58%), hsl(38 80% 48%));
+    --gradient-tri: linear-gradient(
+      90deg,
+      hsl(46 70% 58%) 0%,
+      hsl(240 7% 88%) 50%,
+      hsl(211 80% 60%) 100%
+    );
+    --gradient-canvas: radial-gradient(
+        1200px 600px at 50% -10%,
+        hsla(46, 70%, 50%, 0.08),
+        transparent 60%
+      ),
+      radial-gradient(
+        800px 500px at 10% 110%,
+        hsla(211, 80%, 55%, 0.06),
+        transparent 60%
+      );
+
+    /* Glass */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(212, 175, 55, 0.12);
+    --glass-blur: 20px;
+
+    /* Shadows */
+    --shadow-gold: 0 0 30px hsla(46, 70%, 50%, 0.35);
+    --shadow-blue: 0 0 30px hsla(211, 80%, 55%, 0.35);
+    --shadow-elevated: 0 20px 60px -10px rgba(0, 0, 0, 0.7);
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-image: var(--gradient-canvas);
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  /* Ambient grid overlay — sits on top of body bg, behind content */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(to right, hsla(46, 30%, 50%, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, hsla(46, 30%, 50%, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  #root {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Arabic typography */
+  html[lang="ar"] body {
+    font-family: "Cairo", "DM Sans", system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: "Orbitron", "DM Sans", sans-serif;
+    letter-spacing: 0.01em;
+  }
+
+  html[lang="ar"] h1,
+  html[lang="ar"] h2,
+  html[lang="ar"] h3,
+  html[lang="ar"] h4,
+  html[lang="ar"] .font-display {
+    font-family: "Cairo", "Orbitron", sans-serif;
+    letter-spacing: 0;
+  }
+}
+
+@layer utilities {
+  /* ── Glassmorphism ──────────────────────────────────── */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: var(--radius);
+  }
+
+  .glass-nav {
+    background: rgba(7, 7, 8, 0.55);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border-color: rgba(212, 175, 55, 0.12);
+  }
+
+  /* ── Gold ─────────────────────────────────────────────── */
+  .gold-gradient {
+    background: var(--gradient-gold);
+  }
+
+  .gold-text {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tri-text {
+    background: var(--gradient-tri);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gold-border {
+    border: 1px solid hsl(var(--primary));
+  }
+
+  .gold-glow {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .blue-glow {
+    box-shadow: var(--shadow-blue);
+  }
+
+  .btn-gold {
+    background: var(--gradient-gold);
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 8px 24px -8px hsla(46, 70%, 50%, 0.55),
+      inset 0 1px 0 hsla(0, 0%, 100%, 0.18);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .btn-gold:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 36px -8px hsla(46, 70%, 50%, 0.7),
+      inset 0 1px 0 hsla(0, 0%, 100%, 0.22);
+  }
+
+  /* ── Animations ───────────────────────────────────────── */
+  .animate-pulse-gold {
+    animation: pulse-gold 2.2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-gold {
+    0%, 100% { box-shadow: 0 0 10px hsla(46, 70%, 50%, 0.25); }
+    50%      { box-shadow: 0 0 30px hsla(46, 70%, 50%, 0.55); }
+  }
+
+  .animate-float {
+    animation: float 3.6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  /* Vertical scan beam for AI processing */
+  .scan-beam {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  .scan-beam::after {
+    content: "";
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    top: -10%;
+    height: 30%;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      hsla(211, 80%, 60%, 0.35),
+      transparent
+    );
+    filter: blur(6px);
+    animation: scan 2s ease-in-out infinite;
+  }
+  @keyframes scan {
+    0%   { transform: translateY(-20%); }
+    100% { transform: translateY(380%); }
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      hsla(240, 5%, 20%, 0) 0%,
+      hsla(46, 70%, 60%, 0.18) 50%,
+      hsla(240, 5%, 20%, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2.2s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
